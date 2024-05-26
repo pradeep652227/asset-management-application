@@ -176,3 +176,5 @@ app.get("/api/assets-data", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is Started at PORT= ${PORT}`);
 });
+
+export default app;

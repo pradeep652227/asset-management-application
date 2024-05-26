@@ -1,0 +1,28 @@
+{
+    "rewrites": [
+      {
+        "source": "/signup-server",
+        "destination": "https://blog-app-backend-navy-beta.vercel.app/signup-server"
+      },
+      {
+        "source": "/login-server",
+        "destination": "https://blog-app-backend-navy-beta.vercel.app/login-server"
+      },
+      {
+        "source": "/create-asset-server",
+        "destination": "https://blog-app-backend-navy-beta.vercel.app/create-asset-server"
+      },
+      {
+        "source": "/api/assets-data",
+        "destination": "https://blog-app-backend-navy-beta.vercel.app/api/assets-data"
+      },
+      {
+        "source": "/delete-asset/:assetId",
+        "destination": "https://blog-app-backend-navy-beta.vercel.app/delete-asset/:assetId"
+      },
+      {
+        "source": "/update-asset",
+        "destination": "https://blog-app-backend-navy-beta.vercel.app/update-asset"
+      }
+    ]
+  }

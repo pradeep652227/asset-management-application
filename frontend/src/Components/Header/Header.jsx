@@ -36,7 +36,7 @@ export default function Header() {
     <header id="main-header" className="bg-slate-200">
       <div className="flex flex-wrap justify-around py-4">
         <div>
-          <Logo />
+          <Logo style={{width:"50px",height:"40px"}} className="rounded-md" />
         </div>
         <div className="flex flex-wrap gap- 2">
           <ul>
@@ -44,7 +44,7 @@ export default function Header() {
               <>
                 {" "}
                 {option.isVisible && (
-                  <Button className="bg-gray-400 py-1 hover:bg-gray-100 duration-200 text-xl">
+                  <Button className="bg-gray-400 py-1 border-2 hover:bg-gray-100 duration-200 text-xl">
                     <Link to={option.to}>
                       <li key={option.name}>{option.name}</li>
                     </Link>

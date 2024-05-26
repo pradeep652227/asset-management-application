@@ -71,7 +71,7 @@ export default function Assets() {
             key={asset._id}
             className="block p-4 bg-white shadow rounded mb-4 hover:shadow-xl duration-200"
           >
-            <h3 className="text-xl font-bold">{asset.name}</h3>
+            <h3 className="text-xl font-bold comfortaa">{asset.name}</h3>
             <p>Quantity: {asset.quantity}</p>
             <p>Price: {asset.price} Rupees</p>
           </Link>
