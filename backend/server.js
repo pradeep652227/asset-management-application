@@ -172,6 +172,9 @@ app.get("/api/assets-data", (req, res) => {
     });
 });
 
+app.get("/",(req,res)=>{
+  res.send('Hi');
+})
 //server start
 app.listen(PORT, () => {
   console.log(`Server is Started at PORT= ${PORT}`);
