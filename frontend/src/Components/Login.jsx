@@ -4,18 +4,21 @@ import { login } from "../features/authSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Input } from "./import-components";
+import { Loading } from "./import-components";
 export default function Login() {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-  const [error,setError]=useState(null);
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
+  const navigateTo = useNavigate();
+  const dispatch = useDispatch();
 
-  const navigateTo=useNavigate();
-  const dispatch=useDispatch();
-
-  return (
+  return loader ? (
+    <Loading />
+  ) : (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md">
         <form
@@ -39,7 +42,7 @@ export default function Login() {
             onChange={handleChange}
             required
           />
-          {{error} && <p className="text-center text-rose-900">{error}</p>}
+          {{ error } && <p className="text-center text-rose-900">{error}</p>}
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -60,17 +63,24 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post("/api/login-server",loginData)
-         .then(result=>{
-            if(result.data){
-                 dispatch(login(result.data));
-                 navigateTo("/");
-            }
-            else
-                setError('Incorrect User Credentials!!\nKindly check the details or contact Developer if the details are correct')
-         })
-         .catch(err=>{
-                setError(err.response?.data?.error_msg || 'Problem with the backend. Kindly contact the developer.');
-         });
+    setLoader(true);
+    axios
+      .post("/api/login-server", loginData)
+      .then((result) => {
+        if (result.data) {
+          dispatch(login(result.data));
+          navigateTo("/");
+        } else
+          setError(
+            "Incorrect User Credentials!!\nKindly check the details or contact Developer if the details are correct"
+          );
+      })
+      .catch((err) => {
+        setError(
+          err.response?.data?.error_msg ||
+            "Problem with the backend. Kindly contact the developer."
+        );
+      })
+      .finally(() => setLoader(false));
   }
 }

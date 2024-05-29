@@ -5,6 +5,7 @@ import Input from "./Reusables/Input";
 import axios from "axios";
 import { addAsset, removeAsset } from "../features/assetSlice";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "./import-components";
 
 function AssetForm({ Asset }) {
   const user_details = useSelector((state) => state.auth.user_details);
@@ -12,18 +13,21 @@ function AssetForm({ Asset }) {
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const [error, setError] = useState(false);
-  
+  const [loader, setLoader] = useState(false);
+
   const [formData, setFormData] = useState({
     name: Asset?.name || "",
     quantity: Asset?.quantity || "",
     createdBy: Asset?.createdBy || user_details.email,
     user_role: Asset?.user_role || user_details.user_role,
     category: Asset?.category || "",
-    renewalDate: formatDate(Asset?.renewalDate || "") ,
+    renewalDate: formatDate(Asset?.renewalDate || ""),
     price: Asset?.price || "",
   });
 
-  return (
+  return loader ? (
+    <Loading />
+  ) : (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md">
         <form
@@ -38,7 +42,7 @@ function AssetForm({ Asset }) {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            readOnly={Asset?true:false}
+            readOnly={Asset ? true : false}
           />
           <Input
             label="Quantity"
@@ -106,14 +110,14 @@ function AssetForm({ Asset }) {
       </div>
     </div>
   );
-  function formatDate(date){
-    if(!date){
+  function formatDate(date) {
+    if (!date) {
       return "";
     }
-    const d=new Date(date);
-    const month=`${d.getMonth()+1}`.padStart(2,'0');//it'll pad 0 to the left of string to make it of 02 length(4->04);
-    const day=`${d.getDate()}`.padStart(2,'0');
-    const year=`${d.getFullYear()}`;
+    const d = new Date(date);
+    const month = `${d.getMonth() + 1}`.padStart(2, "0"); //it'll pad 0 to the left of string to make it of 02 length(4->04);
+    const day = `${d.getDate()}`.padStart(2, "0");
+    const year = `${d.getFullYear()}`;
 
     return `${year}-${month}-${day}`;
   }
@@ -126,6 +130,7 @@ function AssetForm({ Asset }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setLoader(true);
     if (Asset) {
       //edit the asset
       axios
@@ -133,7 +138,7 @@ function AssetForm({ Asset }) {
         .then((result) => {
           if (result) {
             //remove the current asset
-            const updatedAsset={...Asset,...formData};
+            const updatedAsset = { ...Asset, ...formData };
             dispatch(removeAsset(Asset._id));
             //add the updated asset
             dispatch(addAsset(updatedAsset));
@@ -149,7 +154,8 @@ function AssetForm({ Asset }) {
             err.response?.data?.error_msg ||
               "Error in Updating this Asset.\nPlease try again later or contact the Dev."
           );
-        });
+        })
+        .finally(() => setLoader(false));
     } else {
       //create a new asset
       axios
@@ -169,7 +175,8 @@ function AssetForm({ Asset }) {
             err.response?.data?.error_msg ||
               "Error in Creating an Asset.\nPlease try again later or contact the Dev."
           );
-        });
+        })
+        .finally(() => setLoader(false));
     }
   }
 }
