@@ -80,7 +80,7 @@ function handleChange(e){
 }
   function handleSubmit(e){
     e.preventDefault();
-    axios.post("/signup-server",formData)
+    axios.post("/api/signup-server",formData)
           .then(result=>{
             console.log(result);
             if(result){

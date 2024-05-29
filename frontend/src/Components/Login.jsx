@@ -58,7 +58,7 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post("/login-server",loginData)
+    axios.post("/api/login-server",loginData)
          .then(result=>{
             if(result.data){
                  dispatch(login(result.data));

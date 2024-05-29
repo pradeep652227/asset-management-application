@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { User, Asset } from "./modules/mongoose.js";
 import dotenv from "dotenv";
 dotenv.config();
+import cors from "cors";
+app.use(cors());
 const app = express();
 const PORT = process.env.PORT || 3000;
 const saltRounds = 10;
@@ -14,7 +16,7 @@ app.use(express.json()); //parsing the incoming JSON data (stringified)
 /*POST Routes*/
 //Users
 
-app.post("/signup-server", (req, res) => {
+app.post("/api/signup-server", (req, res) => {
   let userData =req.body;
   console.log(userData);
   if (
@@ -63,7 +65,7 @@ app.post("/signup-server", (req, res) => {
   }
 });
 
-app.post("/login-server", (req, res) => {
+app.post("/api/login-server", (req, res) => {
   const loginData = req.body;
   User.findOne({ email: loginData.email })
     .then((user) => {
@@ -97,7 +99,7 @@ app.post("/login-server", (req, res) => {
 });
 
 //Assets
-app.post("/create-asset-server", (req, res) => {
+app.post("/api/create-asset-server", (req, res) => {
   const assetData = req.body;
   //create a collection
   let rand = Math.floor(Math.random() * 10000);
@@ -120,7 +122,7 @@ app.post("/create-asset-server", (req, res) => {
 });
 
 /*Update Routes*/
-app.patch("/update-asset", (req, res) => {
+app.patch("/api/update-asset", (req, res) => {
   const assetData = req.body;
   const assetCreatedBy = assetData.createdBy;
   Asset.updateOne({ email: assetCreatedBy }, { $set: assetData })
@@ -139,7 +141,7 @@ app.patch("/update-asset", (req, res) => {
 });
 
 /*Delete Routes*/
-app.delete("/delete-asset/:assetId", (req, res) => {
+app.delete("/api/delete-asset/:assetId", (req, res) => {
   const assetId = req.params.assetId;
 
   Asset.deleteOne({ _id: assetId })

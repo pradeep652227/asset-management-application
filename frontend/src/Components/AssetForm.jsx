@@ -129,7 +129,7 @@ function AssetForm({ Asset }) {
     if (Asset) {
       //edit the asset
       axios
-        .patch("/update-asset", formData)
+        .patch("/api/update-asset", formData)
         .then((result) => {
           if (result) {
             //remove the current asset
@@ -153,7 +153,7 @@ function AssetForm({ Asset }) {
     } else {
       //create a new asset
       axios
-        .post("/create-asset-server", formData)
+        .post("/api/create-asset-server", formData)
         .then((result) => {
           if (result) {
             dispatch(addAsset(result.data));

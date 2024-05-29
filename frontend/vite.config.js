@@ -13,5 +13,11 @@ export default defineConfig({
     //   '/delete-asset/':'http://localhost:3000',
     //   '/update-asset':'http://localhost:3000',
     // }
+     proxy: {
+      '/api': {
+        target: 'https://asset-management-application-backend.vercel.app',
+        changeOrigin: true,
+        secure: false,
+      },
   }
 })

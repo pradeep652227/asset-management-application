@@ -63,7 +63,7 @@ export default function Asset() {
 
   function handleDelete() {
     axios
-      .delete("/delete-asset/" + asset._id)
+      .delete("/api/delete-asset/" + asset._id)
       .then((res) => {
         if (res) {
           dispatch(removeAsset(asset._id));
