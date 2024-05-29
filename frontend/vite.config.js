@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server:{
+  server: {
     // proxy:{
     //   '/signup-server':'http://localhost:3000',
     //   '/login-server':'http://localhost:3000',
@@ -13,11 +13,12 @@ export default defineConfig({
     //   '/delete-asset/':'http://localhost:3000',
     //   '/update-asset':'http://localhost:3000',
     // }
-     proxy: {
-      '/api': {
-        target: 'https://asset-management-application-backend.vercel.app',
+    proxy: {
+      "/api": {
+        target: "https://asset-management-application-backend.vercel.app",
         changeOrigin: true,
         secure: false,
       },
-  }
-})
+    },
+  },
+});
