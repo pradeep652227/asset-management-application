@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../features/authSlice';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import {Input} from './import-components'
-import Loading from './import-components';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../features/authSlice";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Input } from "./import-components";
+import { Loading } from "./import-components";
 
 function Signup() {
-  const [formData,setFormData]=useState({
-    name:"",
-    email:"",
-    password:"",
-    user_role:"others",
-    secret_code:"",
-  })
-  const [error,setError]=useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    user_role: "others",
+    secret_code: "",
+  });
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const navigateTo=useNavigate();
-  const [loader,setLoader]=useState(false);
+  const navigateTo = useNavigate();
+  const [loader, setLoader] = useState(false);
 
-  return (
+  return loader ? (
+    <Loading />
+  ) : (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit}
+        >
           <h2 className="mb-4 text-xl font-bold">Signup</h2>
           <Input
             label="Name"
@@ -48,7 +53,10 @@ function Signup() {
             required
           />
           <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user_role">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="user_role"
+            >
               Role
             </label>
             <select
@@ -64,8 +72,13 @@ function Signup() {
               <option value="others">Others</option>
             </select>
           </div>
-          <Input label="Secret Code (For Dev and Admin only)" name="secret_code" value={formData.secret_code} onChange={handleChange} />
-          {{error} && <p className="text-center text-rose-900">{error}</p>}
+          <Input
+            label="Secret Code (For Dev and Admin only)"
+            name="secret_code"
+            value={formData.secret_code}
+            onChange={handleChange}
+          />
+          {{ error } && <p className="text-center text-rose-900">{error}</p>}
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -79,29 +92,32 @@ function Signup() {
     </div>
   );
 
-function handleChange(e){
-    const {name,value}=e.target;
-    setFormData({...formData,[name]:value});
-}
-  function handleSubmit(e){
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  }
+  function handleSubmit(e) {
     e.preventDefault();
     setLoader(true);
-    axios.post("/api/signup-server",formData)
-          .then(result=>{
-            console.log(result);
-            if(result){
-                dispatch(login(result.data));
-               
-                navigateTo("/");
-            }else{
-                setError('Error from the Server End. Kindly contact the Developer.');
-            }
-          })
-          .catch(err=>{
-            console.log(err);
-            setError(err.response?.data?.error_msg || 'Error from the Server End. Kindly contact the Developer.');
-          })
-          setLoader(false);
+    axios
+      .post("/api/signup-server", formData)
+      .then((result) => {
+        console.log(result);
+        if (result) {
+          dispatch(login(result.data));
+          navigateTo("/");
+        } else {
+          setError("Error from the Server End. Kindly contact the Developer.");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(
+          err.response?.data?.error_msg ||
+            "Error from the Server End. Kindly contact the Developer."
+        );
+      })
+      .finally(() => setLoader(false));
   }
 }
 
