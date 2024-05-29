@@ -18,6 +18,7 @@ export default defineConfig({
         target: "https://asset-management-application-backend.vercel.app",
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
