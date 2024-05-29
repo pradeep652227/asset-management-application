@@ -2,15 +2,15 @@
     "rewrites": [
       {
         "source": "/api/signup-server",
-        "destination": "https://asset-management-application-backend.vercel.app/signup-server"
+        "destination": "https://asset-management-application-backend.vercel.app/api/signup-server"
       },
       {
         "source": "/api/login-server",
-        "destination": "https://asset-management-application-backend.vercel.app/login-server"
+        "destination": "https://asset-management-application-backend.vercel.app/api/login-server"
       },
       {
         "source": "/api/create-asset-server",
-        "destination": "https://asset-management-application-backend.vercel.app/create-asset-server"
+        "destination": "https://asset-management-application-backend.vercel.app/api/create-asset-server"
       },
       {
         "source": "/api/assets-data",
@@ -18,11 +18,11 @@
       },
       {
         "source": "/api/delete-asset/:assetId",
-        "destination": "https://asset-management-application-backend.vercel.app/delete-asset/:assetId"
+        "destination": "https://asset-management-application-backend.vercel.app/api/delete-asset/:assetId"
       },
       {
         "source": "/api/update-asset",
-        "destination": "https://asset-management-application-backend.vercel.app/update-asset"
+        "destination": "https://asset-management-application-backend.vercel.app/api/update-asset"
       }
     ]
   }
