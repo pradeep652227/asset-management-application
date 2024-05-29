@@ -4,6 +4,7 @@ import { login } from '../features/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {Input} from './import-components'
+import Loading from './import-components';
 
 function Signup() {
   const [formData,setFormData]=useState({
@@ -16,6 +17,7 @@ function Signup() {
   const [error,setError]=useState(null);
   const dispatch = useDispatch();
   const navigateTo=useNavigate();
+  const [loader,setLoader]=useState(false);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -83,11 +85,13 @@ function handleChange(e){
 }
   function handleSubmit(e){
     e.preventDefault();
+    setLoader(true);
     axios.post("/api/signup-server",formData)
           .then(result=>{
             console.log(result);
             if(result){
                 dispatch(login(result.data));
+               
                 navigateTo("/");
             }else{
                 setError('Error from the Server End. Kindly contact the Developer.');
@@ -97,6 +101,7 @@ function handleChange(e){
             console.log(err);
             setError(err.response?.data?.error_msg || 'Error from the Server End. Kindly contact the Developer.');
           })
+          setLoader(false);
   }
 }
 
