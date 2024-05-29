@@ -89,6 +89,7 @@ function AssetForm({ Asset }) {
             type="date"
             value={formData.renewalDate}
             onChange={handleChange}
+            required
           />
           <Input
             label="Price (in Rupees)"
