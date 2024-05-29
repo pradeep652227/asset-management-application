@@ -3,8 +3,6 @@ import bcrypt from "bcrypt";
 import { User, Asset } from "./modules/mongoose.js";
 import dotenv from "dotenv";
 dotenv.config();
-import cors from "cors";
-app.use(cors());
 const app = express();
 const PORT = process.env.PORT || 3000;
 const saltRounds = 10;
