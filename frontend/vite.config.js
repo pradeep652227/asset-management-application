@@ -5,21 +5,13 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    // proxy:{
-    //   '/signup-server':'http://localhost:3000',
-    //   '/login-server':'http://localhost:3000',
-    //   '/create-asset-server':'http://localhost:3000',
-    //   '/api/assets-data':'http://localhost:3000',
-    //   '/delete-asset/':'http://localhost:3000',
-    //   '/update-asset':'http://localhost:3000',
-    // }
-    proxy: {
-      "/api": {
-        target: "https://asset-management-application-backend.vercel.app",
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
+    proxy:{
+      '/api/signup-server':'http://localhost:3000',
+      '/api/login-server':'http://localhost:3000',
+      '/api/create-asset-server':'http://localhost:3000',
+      '/api/assets-data':'http://localhost:3000',
+      '/api/delete-asset/':'http://localhost:3000',
+      '/api/update-asset':'http://localhost:3000',
+    }
   },
 });

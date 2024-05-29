@@ -17,15 +17,23 @@ app.use(express.json()); //parsing the incoming JSON data (stringified)
 app.post("/api/signup-server", (req, res) => {
   let userData =req.body;
   console.log(userData);
+  if(!userData.name || !userData.email || !userData.password){
+    res
+    .status(401)
+    .json({ error_msg: "Kindly provide the required field(s)" });
+
+    return ;
+  }
+
   if (
-    userData.user_role.toLowerCase() === "admin" &&
+    userData.user_role?.toLowerCase() === "admin" &&
     userData.secret_code !== String(process.env.ADMIN_CODE)
   ) {
     res
       .status(401)
       .json({ error_msg: "Secret Code not correct for Admin Role" });
   } else if (
-    userData.user_role.toLowerCase() === "dev" &&
+    userData.user_role?.toLowerCase() === "dev" &&
     userData.secret_code !== String(process.env.DEV_CODE)
   ) {
     res.status(401).json({ error_msg: "Secret Code not correct for Dev Role" });
@@ -65,6 +73,13 @@ app.post("/api/signup-server", (req, res) => {
 
 app.post("/api/login-server", (req, res) => {
   const loginData = req.body;
+  if(!loginData.email || !loginData.password){
+    res
+    .status(401)
+    .json({ error_msg: "Kindly provide the required field(s)" });
+
+    return ;
+  }
   User.findOne({ email: loginData.email })
     .then((user) => {
       if (!user) {

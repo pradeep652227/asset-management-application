@@ -29,6 +29,7 @@ export default function Login() {
             type="email"
             value={loginData.email}
             onChange={handleChange}
+            required
           />
           <Input
             label="Password"
@@ -36,12 +37,13 @@ export default function Login() {
             type="password"
             value={loginData.password}
             onChange={handleChange}
+            required
           />
           {{error} && <p className="text-center text-rose-900">{error}</p>}
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Login
             </button>
